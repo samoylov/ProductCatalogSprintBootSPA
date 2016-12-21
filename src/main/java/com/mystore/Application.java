@@ -1,7 +1,8 @@
 package com.mystore;
 
-import com.mystore.domain.Product;
-import com.mystore.repository.ProductRepository;
+import com.mystore.model.Product;
+import com.mystore.model.ProductDao;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -15,23 +16,23 @@ import java.io.IOException;
 public class Application {
 
 
-    private static ProductRepository productRepository = null;
-
     @Autowired
-    public Application(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    private static ProductDao productDao = null;
+
+    public Application(ProductDao productDao) {
+        this.productDao = productDao;
     }
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
 
-//        parse();
+        //parse();
     }
 
     public static void parse() throws IOException {
 
         Document document =
-                Jsoup.connect("http://www.adidas.co.uk/men-shoes").get();
+                Jsoup.connect("http://www.adidas.com/us/women-shoes").get();
 
         Product product;
 
@@ -54,7 +55,7 @@ public class Application {
                     photos.get(i).attr("data-original"),
                     Double.parseDouble(prices.get(i).text()));
 
-            productRepository.save(product);
+            productDao.save(product);
         }
 
 

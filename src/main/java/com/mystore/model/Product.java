@@ -1,7 +1,6 @@
-package com.mystore.domain;
+package com.mystore.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Product {

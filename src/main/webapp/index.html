@@ -18,19 +18,10 @@
 <body>
 <div id="container">
 
-
-
     <!-- HEADER -->
     <div class="row" id="header">
-        <div class="col-md-12">
+        <div class="col-md-12" style="background-image: url('static/logo.jpg'); background-position: left; height: 72px">
 
-            <!-- JUST FOR FUN -->
-            <div class="alert alert-warning fade in alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Welcome!</strong> The website is under construction.
-            </div>
-
-            a header
 
         </div>
     </div>
@@ -39,12 +30,12 @@
     <div class="row" id="middle">
 
         <!-- SIDEBAR -->
-        <div class="col-md-2 bg-info" id="sidebar">
+        <div class="col-md-3 bg-info" id="sidebar">
             a sidebar
         </div>
 
         <!-- MAIN SECTION -->
-        <div class="col-md-10" id="main">
+        <div class="col-md-9" id="main">
 
             <!-- HEADLINE -->
             <h1 id="headline">Hello, world!</h1>
@@ -58,7 +49,7 @@
     </div>
 
     <!-- FOOTER -->
-    <div class="row">
+    <div class="row footer">
         <div class="col-md-12 bg-warning" id="footer">
             a footer
         </div>
@@ -70,6 +61,7 @@
     <script src="js/jquery-3.1.1.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="mustache/mustache.js"></script>
     <script src="js/header.js"></script>
     <script src="js/footer.js"></script>
 
