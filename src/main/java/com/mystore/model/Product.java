@@ -1,6 +1,7 @@
 package com.mystore.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -13,6 +14,8 @@ public class Product {
     private String description;
     private String photo;
     private double price;
+    @OneToMany(mappedBy = "product")
+    private List<Cart> cartList;
 
     public Product() {
     }
@@ -62,6 +65,14 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<Cart> getCartList() {
+        return cartList;
+    }
+
+    public void setCartList(List<Cart> cartList) {
+        this.cartList = cartList;
     }
 
     @Override

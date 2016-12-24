@@ -1,6 +1,9 @@
 package com.mystore.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +13,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
     private int quantity;
 
@@ -49,8 +53,7 @@ public class Cart {
     @Override
     public String toString() {
         return "Cart{" +
-                "id=" + id +
-                ", product=" + product.getId() +
+                "product=" + product.toString() +
                 ", quantity=" + quantity +
                 '}';
     }

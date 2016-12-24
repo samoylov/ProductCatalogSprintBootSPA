@@ -16,15 +16,36 @@
     <![endif]-->
 </head>
 <body>
-<div id="container">
+<div id="container" style="padding-right: 50px; padding-left: 50px">
 
     <!-- HEADER -->
     <div class="row" id="header">
-        <div class="col-md-12" style="background-image: url('static/logo.jpg'); background-position: left; height: 72px">
-
-
+        <div class="col-md-9" id="navigation">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Store Logo</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Product Catalogue</a></li>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contacts</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </nav>
         </div>
+
+        <div class="col-md-3">
+            <ul class="nav navbar-nav">
+                <button id="cartStatus" type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                        data-target="#myModal">Shopping Cart
+                </button>
+            </ul>
+        </div>
+
     </div>
+
 
     <!-- MIDDLE -->
     <div class="row" id="middle">
@@ -60,9 +81,11 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
     <script src="js/jquery-3.1.1.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
     <script src="mustache/mustache.js"></script>
     <script src="js/header.js"></script>
+    <script src="js/cartManagement.js"></script>
+    <script src="js/productManagement.js"></script>
     <script src="js/footer.js"></script>
 
 </div>
