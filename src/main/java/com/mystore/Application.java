@@ -2,7 +2,6 @@ package com.mystore;
 
 import com.mystore.model.Product;
 import com.mystore.model.ProductDao;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;

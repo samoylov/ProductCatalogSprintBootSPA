@@ -14,6 +14,7 @@ public class Product {
     private String description;
     private String photo;
     private double price;
+
     @OneToMany(mappedBy = "product")
     private List<Cart> cartList;
 

@@ -3,8 +3,6 @@ package com.mystore.controller;
 import com.mystore.model.Cart;
 import com.mystore.model.CartDao;
 import com.mystore.model.ProductDao;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,13 +31,17 @@ public class CartController {
         cartDao.save(cartItem);
         return true;
     }
+
     @RequestMapping(value = "/getCart", method = RequestMethod.GET)
     public CartRepresentation getCart() {
-
         return new CartRepresentation(cartDao.findAll());
-
     }
 
+    @RequestMapping(value = "/deleteCartItem", method = RequestMethod.GET)
+    public boolean deleteCartItem(@RequestParam("cartItemId") String cartItemId) {
+        cartDao.delete(Long.parseLong(cartItemId));
+        return true;
+    }
 
 
 }

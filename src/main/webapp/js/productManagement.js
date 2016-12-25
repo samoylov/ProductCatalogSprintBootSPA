@@ -6,30 +6,19 @@ var productCardTemplate =
     "<button onclick='addToCart(id)' class='btn btn-default' id='{{id}}'>Add to Cart »</button>";
 
 function displayProducts() {
-
-    $.ajax({
-        url: 'http://localhost:8080/Product',
-        method: 'GET',
-        contentType: 'application/json; charset=UTF-8',
-        dataType: 'json',
-        success: function (res) {
-            var products = res._embedded.products;
-
-            for (var i = 0; i < products.length; i++) {
-                displayProduct(products[i])
-            }
+    $.get('http://localhost:8080/Product', function (res) {
+        var products = res._embedded.products;
+        for (var i = 0; i < products.length; i++) {
+            displayProduct(products[i])
         }
     });
 }
 
 function displayProduct(product) {
     var productList = document.getElementById('content');
-
     var div = document.createElement("div");
     div.className = "col-md-3";
-    div.style = "height:420px";
-
-    var html = Mustache.render(productCardTemplate, product);
-    div.innerHTML = html;
+    div.style = "height: 420px";
+    div.innerHTML = Mustache.render(productCardTemplate, product);
     productList.appendChild(div);
 }

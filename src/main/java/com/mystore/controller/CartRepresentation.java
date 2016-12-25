@@ -4,33 +4,38 @@ import com.mystore.model.Cart;
 import com.mystore.model.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CartRepresentation {
 
-    private ArrayList<Cart> cartItems;
+    private ArrayList<CartItem> cartItems;
     private double totalAmount;
     private int numberOfProducts;
     private String cartStatus;
 
-    public CartRepresentation(Iterable<Cart> cartItems) {
-        this.cartItems = new ArrayList<Cart>();
-        for (Cart cartItem : cartItems)
-            this.cartItems.add(cartItem);
+    public CartRepresentation(Iterable<Cart> carts) {
+        cartItems = new ArrayList<>();
+        totalAmount = 0;
+
+        for (Cart cart : carts) {
+            Product product = cart.getProduct();
+            this.cartItems.add(new CartItem(cart, product));
+            totalAmount += product.getPrice() * cart.getQuantity();
+        }
+        numberOfProducts = cartItems.size();
+        cartStatus = getNumberOfProducts() == 0 ?
+                "Cart is empty" :
+                String.format("%.2f USD, %d products", getTotalAmount(), getNumberOfProducts());
     }
 
-    public Iterable<Cart> getCartItems() {
+    public ArrayList<CartItem> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(ArrayList<Cart> cartItems) {
+    public void setCartItems(ArrayList<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
 
     public double getTotalAmount() {
-        totalAmount = 0;
-        for (Cart cartItem : cartItems)
-            totalAmount += cartItem.getProduct().getPrice() * cartItem.getQuantity();
         return totalAmount;
     }
 
@@ -38,10 +43,15 @@ public class CartRepresentation {
         this.totalAmount = totalAmount;
     }
 
+    public int getNumberOfProducts() {
+        return numberOfProducts;
+    }
+
+    public void setNumberOfProducts(int numberOfProducts) {
+        this.numberOfProducts = numberOfProducts;
+    }
+
     public String getCartStatus() {
-        cartStatus = getNumberOfProducts() == 0 ?
-                "Cart is empty" :
-                String.format("%.2f USD, %d products", getTotalAmount(), getNumberOfProducts());
         return cartStatus;
     }
 
@@ -49,22 +59,39 @@ public class CartRepresentation {
         this.cartStatus = cartStatus;
     }
 
-    public int getNumberOfProducts() {
-        return cartItems.size();
+    class CartItem {
+
+        Cart cartItem;
+        Product product;
+
+        public CartItem(Cart cartItem, Product product) {
+            this.cartItem = cartItem;
+            this.product = product;
+        }
+
+        public Cart getCartItem() {
+            return cartItem;
+        }
+
+        public void setCartItem(Cart cartItem) {
+            this.cartItem = cartItem;
+        }
+
+        public Product getProduct() {
+            return product;
+        }
+
+        public void setProduct(Product product) {
+            this.product = product;
+        }
+
+        @Override
+        public String toString() {
+            return "CartItem{" +
+                    "cartItem=" + cartItem +
+                    ", product=" + product +
+                    '}';
+        }
     }
 
-    public void setNumberOfProducts(int numberOfProducts) {
-        this.numberOfProducts = numberOfProducts;
-    }
-
-    @Override
-    public String toString() {
-        System.out.println(cartItems.toString());
-        return "CartRepresentation{" +
-                "cartItems=" + cartItems.toString() +
-                ", totalAmount=" + getTotalAmount() +
-                ", numberOfProducts=" + getNumberOfProducts() +
-                ", cartStatus=" + getCartStatus() +
-                '}';
-    }
 }

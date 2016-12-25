@@ -35,8 +35,8 @@ public class User {
         this.role = role;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public Long getId() {
+        return id;
     }
 
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -44,11 +44,6 @@ public class User {
 //        authorities.add(new SimpleGrantedAuthority(role.name()));
 //        return authorities;
 //    }
-
-
-    public Long getId() {
-        return id;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -72,6 +67,10 @@ public class User {
 
     public String getPhoto() {
         return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public Role getRole() {
