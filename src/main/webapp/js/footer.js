@@ -1,2 +1,3 @@
 displayCartStatus();
 displayProducts();
+displayCart();

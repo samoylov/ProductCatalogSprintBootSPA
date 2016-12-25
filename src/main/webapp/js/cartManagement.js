@@ -24,21 +24,23 @@ var cartItemsTableTemplate =
     "{{#cartItems}}" +
     "<tr>" +
     "<td>{{product.name}}</td>" +
-    "<td>{{cartItem.quantity}}</td>" +
-    "<td>{{product.price}}</td>" +
+    "<td align='center'>{{cartItem.quantity}}</td>" +
+    "<td align='center'>{{product.price}}</td>" +
     "<td><a href='#' name='deleteCartItem' id='{{cartItem.id}}' onclick='deleteCartItem(id)'>delete</a></td>" +
-    // "<td><button type='button' class='btn btn-warning' name='deleteCartItem' id='{{cartItem.id}}'>X</button></td>" +
     "</tr>" +
     "{{/cartItems}}" +
     "</tbody></table>";
 
 function displayCart() {
     $.get('http://localhost:8080/getCart', function (res) {
-        document.getElementById('sidebar').innerHTML = Mustache.render(cartItemsTableTemplate, res);
+        if (res.cartItems.length != 0)
+            document.getElementById('sidebar').innerHTML = Mustache.render(cartItemsTableTemplate, res);
+        else
+            document.getElementById('sidebar').innerHTML = "";
     });
 }
 
-function deleteCartItem(id){
+function deleteCartItem(id) {
     $.get('http://localhost:8080/deleteCartItem?cartItemId=' + id, function (res) {
         displayCart();
         displayCartStatus();
