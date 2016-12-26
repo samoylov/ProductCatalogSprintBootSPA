@@ -1,51 +1,70 @@
 // cart functions
 
 function addToCart(id) {
-    $.get('http://localhost:8080/addToCart?productId=' + id, function () {
+    $.get(baseURL + '/addToCart?productId=' + id, function () {
         displayCart();
         displayCartStatus();
     });
 }
 
 function displayCartStatus() {
-    $.get('http://localhost:8080/getCart', function (res) {
+    $.get(baseURL + '/getCart', function (res) {
         var cartStatus = document.getElementById('cartStatus');
-        cartStatus.innerHTML = res.cartStatus;
+        cartStatus.innerHTML = "<span class='glyphicon glyphicon-shopping-cart'>&nbsp;</span>" + res.cartStatus;
     });
 }
 
 var cartItemsTableTemplate =
+    "<h3>Shopping Cart</h3>" +
     "<table class='table table-condensed' id='cartEditor'><thead><tr>" +
     "<th>Product</th>" +
     "<th>Quantity</th>" +
+    "<th></th>" +
     "<th>Price</th>" +
     "<th></th>" +
     "</tr></thead><tbody>" +
     "{{#cartItems}}" +
     "<tr>" +
+
     "<td>{{product.name}}</td>" +
-    "<td align='center'>{{cartItem.quantity}}</td>" +
-    "<td align='center'>{{product.price}}</td>" +
+
+    "<td align='center'>{{cartItem.quantity}}" +
+    "<td align='center' nowrap='nowrap'>" +
+
+    "<div class='btn-group-sm'>" +
+    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='modifyCartItemQuantity(id, -1)'>-</button>" +
+    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='modifyCartItemQuantity(id, 1)'>+</button>" +
+    "</div>" +
+
+    "<td>{{product.price}}</td>" +
+
     "<td><a href='#' name='deleteCartItem' id='{{cartItem.id}}' onclick='deleteCartItem(id)'>delete</a></td>" +
     "</tr>" +
+
     "{{/cartItems}}" +
     "</tbody></table>";
 
 function displayCart() {
-    $.get('http://localhost:8080/getCart', function (res) {
+    $.get(baseURL + '/getCart', function (res) {
+        var shoppingCart = document.getElementById('shoppingCart');
         if (res.cartItems.length != 0)
-            document.getElementById('sidebar').innerHTML = Mustache.render(cartItemsTableTemplate, res);
+            shoppingCart.innerHTML = Mustache.render(cartItemsTableTemplate, res);
         else
-            document.getElementById('sidebar').innerHTML = "";
+            shoppingCart.innerHTML = "";
     });
 }
 
 function deleteCartItem(id) {
-    $.get('http://localhost:8080/deleteCartItem?cartItemId=' + id, function (res) {
+    $.get(baseURL + '/deleteCartItem?cartItemId=' + id, function (res) {
         displayCart();
         displayCartStatus();
     });
 }
 
-
+function modifyCartItemQuantity(cartItemId, delta) {
+    $.get(baseURL + '/modifyCartItemQuantity?cartItemId=' + cartItemId + '&delta=' + delta, function (res) {
+        displayCart();
+        displayCartStatus();
+    });
+}
 

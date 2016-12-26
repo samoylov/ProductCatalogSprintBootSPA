@@ -1,8 +1,8 @@
 package com.mystore.controller;
 
+import com.mystore.dao.CartDao;
+import com.mystore.dao.ProductDao;
 import com.mystore.model.Cart;
-import com.mystore.model.CartDao;
-import com.mystore.model.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +29,22 @@ public class CartController {
             cartItem.setQuantity(cartItem.getQuantity() + 1);
 
         cartDao.save(cartItem);
+        return true;
+    }
+
+    @RequestMapping(value = "/modifyCartItemQuantity", method = RequestMethod.GET)
+    public boolean modifyCartItemQuantity(
+            @RequestParam("cartItemId") String cartItemId,
+            @RequestParam("delta") String delta) {
+
+        Long id = Long.parseLong(cartItemId);
+        Cart cartItem = cartDao.findOne(id);
+        cartItem.setQuantity(cartItem.getQuantity() + Integer.parseInt(delta));
+        if (cartItem.getQuantity() == 0)
+            cartDao.delete(id);
+        else
+            cartDao.save(cartItem);
+
         return true;
     }
 

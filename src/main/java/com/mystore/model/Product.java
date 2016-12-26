@@ -15,6 +15,10 @@ public class Product {
     private String photo;
     private double price;
 
+    @ManyToOne
+    private Gender gender;
+    @ManyToOne
+    private ProductType productType;
     @OneToMany(mappedBy = "product")
     private List<Cart> cartList;
 
@@ -74,6 +78,22 @@ public class Product {
 
     public void setCartList(List<Cart> cartList) {
         this.cartList = cartList;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
     }
 
     @Override

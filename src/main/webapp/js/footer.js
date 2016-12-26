@@ -1,3 +1,4 @@
 displayCartStatus();
 displayProducts();
 displayCart();
+//displayCatalogGenderFilters();

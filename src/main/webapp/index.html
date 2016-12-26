@@ -25,7 +25,7 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Store Logo</a>
+                        <a class="navbar-brand" href="#">Company Name or Logo</a>
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Product Catalogue</a></li>
@@ -35,7 +35,12 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right ">
                         <li>
-                            <a href="#" id="cartStatus" style="color: #3c763d; font-weight: bold"><span class="glyphicon glyphicon-user"></span>
+                            <a href="#" id="signIn" >
+                                <span class='glyphicon glyphicon-user'>&nbsp</span>Sign In
+                            </a>
+                        </li>
+                        <li>
+                                <a href="#" id="cartStatus" style="color: #3c763d; font-weight: bold">
                                 Shopping Cart
                             </a>
                         </li>
@@ -53,13 +58,28 @@
 
         <!-- SIDEBAR -->
         <div class="col-md-3" id="sidebar">
+
+            <div id="shoppingCart">
+
+            </div>
+
+            <div id="catalogGenderFilter">
+
+            </div>
+
+            <div id="catalogProductTypeFilter">
+
+            </div>
+
         </div>
 
         <!-- MAIN SECTION -->
         <div class="col-md-9" id="main">
 
             <!-- HEADLINE -->
-            <h1 id="headline">Hello, world!</h1>
+            <h1 id="headline">Category Name</h1>
+
+            <div id="pagination"></div>
 
             <!-- CONTENT -->
             <div id="content">
@@ -84,6 +104,8 @@
     <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
     <script src="mustache/mustache.js"></script>
 
+    <script src="js/cookie.js"></script>
+    <script src="js/settings.js"></script>
     <script src="js/cartManagement.js"></script>
     <script src="js/productManagement.js"></script>
     <script src="js/header.js"></script>
