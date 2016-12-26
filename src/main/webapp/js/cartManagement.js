@@ -20,7 +20,7 @@ var cartItemsTableTemplate =
     "<th>Product</th>" +
     "<th>Quantity</th>" +
     "<th></th>" +
-    "<th>Price</th>" +
+    "<th>Amount</th>" +
     "<th></th>" +
     "</tr></thead><tbody>" +
     "{{#cartItems}}" +
@@ -36,7 +36,7 @@ var cartItemsTableTemplate =
     "<button class='btn btn-default' id='{{cartItem.id}}' onclick='modifyCartItemQuantity(id, 1)'>+</button>" +
     "</div>" +
 
-    "<td>{{product.price}}</td>" +
+    "<td>{{amount}}</td>" +
 
     "<td><a href='#' name='deleteCartItem' id='{{cartItem.id}}' onclick='deleteCartItem(id)'>delete</a></td>" +
     "</tr>" +

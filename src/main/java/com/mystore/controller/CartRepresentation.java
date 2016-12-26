@@ -63,10 +63,12 @@ public class CartRepresentation {
 
         Cart cartItem;
         Product product;
+        double amount;
 
         public CartItem(Cart cartItem, Product product) {
             this.cartItem = cartItem;
             this.product = product;
+            this.amount = cartItem.getQuantity() * product.getPrice();
         }
 
         public Cart getCartItem() {
@@ -85,11 +87,20 @@ public class CartRepresentation {
             this.product = product;
         }
 
+        public double getAmount() {
+            return amount;
+        }
+
+        public void setAmount(double amount) {
+            this.amount = amount;
+        }
+
         @Override
         public String toString() {
             return "CartItem{" +
                     "cartItem=" + cartItem +
                     ", product=" + product +
+                    ", amount=" + amount +
                     '}';
         }
     }
