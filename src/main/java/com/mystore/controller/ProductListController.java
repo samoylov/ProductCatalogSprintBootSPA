@@ -23,10 +23,8 @@ public class ProductListController {
     public ProductListRepresentation getProductList(@RequestParam(value = "genderId", required = false) String genderId, @RequestParam(value = "productTypeId", required = false) String productTypeId) {
 
         ProductListRepresentation productList = new ProductListRepresentation(productDao.findAll());
-
-
-
         return productList;
+
     }
 
 

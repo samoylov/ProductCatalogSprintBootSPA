@@ -39,7 +39,9 @@ public class CartController {
 
         Long id = Long.parseLong(cartItemId);
         Cart cartItem = cartDao.findOne(id);
+
         cartItem.setQuantity(cartItem.getQuantity() + Integer.parseInt(delta));
+
         if (cartItem.getQuantity() == 0)
             cartDao.delete(id);
         else
