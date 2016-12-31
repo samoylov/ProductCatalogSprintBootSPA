@@ -77,36 +77,33 @@ function displayPagination(res) {
 
     var currentPage = res.page.number;
     var pageFirst = currentPage < 1 ? undefined : pageLinks.first.href.split("page=")[1].split("&")[0];
-    var pagePrev = currentPage < 2 ? undefined : pageLinks.prev.href.split("page=")[1].split("&")[0];
-    var pageNext = currentPage > numberOfPages - 3 ? undefined : pageLinks.next.href.split("page=")[1].split("&")[0];
+    var pagePrev = currentPage < 1 ? undefined : pageLinks.prev.href.split("page=")[1].split("&")[0];
+    var pageNext = currentPage > numberOfPages - 2 ? undefined : pageLinks.next.href.split("page=")[1].split("&")[0];
     var pageLast = currentPage > numberOfPages - 2 ? undefined : pageLinks.last.href.split("page=")[1].split("&")[0];
 
     var pages = [];
     var p = 0;
     if (pageFirst != undefined)
-        pages[p++] = {text: "First", id: parseInt(pageFirst), class: ""};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-step-backward'></span>", id: parseInt(pageFirst), class: ""};
     else
-        pages[p++] = {text: "First", id: 0, class: "disabled"};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-step-backward'></span>", id: 0, class: "disabled"};
 
     if (pagePrev != undefined)
-        pages[p++] = {text: "Prev", id: parseInt(pagePrev), class: ""};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-backward'> </span>", id: parseInt(pagePrev), class: ""};
     else
-        pages[p++] = {text: "Prev", id: 0, class: "disabled"};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-backward'> </span>", id: 0, class: "disabled"};
 
     pages[p++] = {text: "Page " + (currentPage + 1) + "/" + numberOfPages, id: currentPage, class: "active"};
 
     if (pageNext != undefined)
-        pages[p++] = {text: "Next", id: parseInt(pageNext), class: ""};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-forward'></span> ", id: parseInt(pageNext), class: ""};
     else
-        pages[p++] = {text: "Next", id: 0, class: "disabled"};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-forward'></span>", id: 0, class: "disabled"};
 
     if (pageLast != undefined)
-        pages[p++] = {text: "Last", id: parseInt(pageLast), class: ""};
+        pages[p++] = {text: "<span class='glyphicon glyphicon-step-forward'></span>", id: parseInt(pageLast), class: ""};
     else
-        pages[p++] = {text: "Last", id: 0, class: "disabled"};
-
-
-    console.log(pages);
+        pages[p++] = {text: "<span class='glyphicon glyphicon-step-forward'></span>", id: 0, class: "disabled"};
 
 
     var div = document.createElement('div');
