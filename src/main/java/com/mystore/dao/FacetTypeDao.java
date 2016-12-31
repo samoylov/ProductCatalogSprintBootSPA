@@ -1,14 +1,14 @@
 package com.mystore.dao;
 
-import com.mystore.model.Cart;
+import com.mystore.model.FacetType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RepositoryRestResource(path = "Cart")
-public interface CartDao extends CrudRepository<Cart, Long> {
+@RepositoryRestResource(path = "FacetType")
+public interface FacetTypeDao extends CrudRepository<FacetType, Long> {
 
-    Cart findByProductId(Long productId);
+    FacetType findOneByName(String name);
 
 }

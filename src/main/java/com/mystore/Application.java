@@ -1,9 +1,11 @@
 package com.mystore;
 
-import com.mystore.dao.GenderDao;
+import com.mystore.dao.FacetDao;
+import com.mystore.dao.FacetTypeDao;
 import com.mystore.dao.ProductDao;
-import com.mystore.dao.ProductTypeDao;
-import com.mystore.model.*;
+import com.mystore.model.Product;
+import com.mystore.model.Facet;
+import com.mystore.model.FacetType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @SpringBootApplication
 public class Application {
@@ -20,27 +23,28 @@ public class Application {
     @Autowired
     private static ProductDao productDao = null;
     @Autowired
-    private static GenderDao genderDao = null;
+    private static FacetDao facetDao;
     @Autowired
-    private static ProductTypeDao productTypeDao = null;
+    private static FacetTypeDao facetTypeDao;
 
-    public Application(ProductDao productDao, GenderDao genderDao, ProductTypeDao productTypeDao) {
+
+    public Application(ProductDao productDao, FacetTypeDao facetTypeDao, FacetDao facetDao) {
+        this.facetDao = facetDao;
+        this.facetTypeDao = facetTypeDao;
         this.productDao = productDao;
-        this.genderDao = genderDao;
-        this.productTypeDao = productTypeDao;
     }
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
 
-//        parse("http://www.adidas.com/us/men-originals-shoes");
-//        parse("http://www.adidas.com/us/men-soccer-shoes");
-//        parse("http://www.adidas.com/us/men-jackets");
-//        parse("http://www.adidas.com/us/men-hoodies");
-//        parse("http://www.adidas.com/us/women-jackets");
-//        parse("http://www.adidas.com/us/women-hoodies");
-//        parse("http://www.adidas.com/us/women-sleeveless_tops");
-//        parse("http://www.adidas.com/us/women-bras");
+        parse("http://www.adidas.com/us/men-originals-shoes");
+        parse("http://www.adidas.com/us/men-soccer-shoes");
+        parse("http://www.adidas.com/us/men-jackets");
+        parse("http://www.adidas.com/us/men-hoodies");
+        parse("http://www.adidas.com/us/women-jackets");
+        parse("http://www.adidas.com/us/women-hoodies");
+        parse("http://www.adidas.com/us/women-sleeveless_tops");
+        parse("http://www.adidas.com/us/women-bras");
     }
 
     public static void parse(String url) throws IOException {
@@ -50,20 +54,31 @@ public class Application {
 
         Product product;
 
-        Elements filterNames = document.select("span.filtername");
-        Elements filterValues = document.select("span.filtervalue");
+        Elements facetTypeNames = document.select("span.filtername");
+        Elements facetNames = document.select("span.filtervalue");
+        ArrayList<Facet> facets = new ArrayList<>();
+        String facetTypeName;
+        String facetName;
 
-        Gender gender = new Gender(filterValues.get(0).text());
-        System.out.println("found:" + genderDao.findOneByName(gender.getName()));
-        if (genderDao.findOneByName(gender.getName()) == null)
-            genderDao.save(gender);
-        gender = genderDao.findOneByName(gender.getName());
+        for (int i = 0; i < facetTypeNames.size(); i++) {
 
-        ProductType productType = new ProductType(filterValues.get(1).text());
-        System.out.println("found:" + productTypeDao.findOneByName(productType.getName()));
-        if (productTypeDao.findOneByName(productType.getName()) == null)
-            productTypeDao.save(productType);
-        productType = productTypeDao.findOneByName(productType.getName());
+            facetTypeName = facetTypeNames.get(i).text();
+            facetName = facetNames.get(i).text();
+
+            FacetType facetType = facetTypeDao.findOneByName(facetTypeName);
+            if (facetType == null) {
+                facetType = new FacetType(facetTypeName);
+                facetTypeDao.save(facetType);
+            }
+
+            Facet facet = facetDao.findOneByNameAndFacetTypeId(facetName, facetType.getId());
+            if (facet == null) {
+                facet = new Facet(facetName, facetType);
+                facetDao.save(facet);
+                facets.add(facet);
+            }
+
+        }
 
         Elements names = document.select("span.title");
         Elements descriptions = document.select("span.subtitle");
@@ -72,19 +87,13 @@ public class Application {
 
         for (int i = 0; i < names.size(); i++) {
 
-//            System.out.println(names.get(i).text());
-//            System.out.println(descriptions.get(i).text());
-//            System.out.println(photos.get(i).attr("data-original"));
-//            System.out.println(prices.get(i).text());
-//            System.out.println("-------");
-
             product = new Product(
                     names.get(i).text(),
                     descriptions.get(i).text(),
                     photos.get(i).attr("data-original"),
                     Double.parseDouble(prices.get(i).text()));
-            product.setGender(gender);
-            product.setProductType(productType);
+
+            product.setFacets(facets);
 
             productDao.save(product);
         }

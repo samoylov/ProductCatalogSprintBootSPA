@@ -1,9 +1,12 @@
 package com.mystore.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
 public class Product {
 
     @Id
@@ -15,10 +18,12 @@ public class Product {
     private String photo;
     private double price;
 
-    @ManyToOne
-    private Gender gender;
-    @ManyToOne
-    private ProductType productType;
+    @ManyToMany
+    @JoinTable(name = "products_facets", joinColumns = {
+            @JoinColumn(name = "facet", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "product", referencedColumnName = "id", nullable = false)})
+    private List<Facet> facets;
+
     @OneToMany(mappedBy = "product")
     private List<Cart> cartList;
 
@@ -32,78 +37,7 @@ public class Product {
         this.price = price;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public List<Cart> getCartList() {
-        return cartList;
-    }
-
-    public void setCartList(List<Cart> cartList) {
-        this.cartList = cartList;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public ProductType getProductType() {
-        return productType;
-    }
-
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
-                ", price=" + price +
-                '}';
+    public void setFacets(List<Facet> facets) {
+        this.facets = facets;
     }
 }

@@ -32,13 +32,13 @@ var cartItemsTableTemplate =
     "<td align='center' nowrap='nowrap'>" +
 
     "<div class='btn-group-sm'>" +
-    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='modifyCartItemQuantity(id, -1)'>-</button>" +
-    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='modifyCartItemQuantity(id, 1)'>+</button>" +
+    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='{modifyCartItemQuantity(id, -1)}'>-</button>" +
+    "<button class='btn btn-default' id='{{cartItem.id}}' onclick='{modifyCartItemQuantity(id, 1)}'>+</button>" +
     "</div>" +
 
     "<td>{{amount}}</td>" +
 
-    "<td><a href='#' name='deleteCartItem' id='{{cartItem.id}}' onclick='deleteCartItem(id)'>delete</a></td>" +
+    "<td><a href='#' name='deleteCartItem' id='{{cartItem.id}}' onclick='{deleteCartItem(id)}'>delete</a></td>" +
     "</tr>" +
 
     "{{/cartItems}}" +

@@ -64,6 +64,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.3.4.RELEASE" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.40" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.16.10" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:1.4.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.4.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.7.2" />

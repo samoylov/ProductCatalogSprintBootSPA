@@ -3,7 +3,7 @@ var productCardTemplate =
     "<h4>{{name}}</h4>" +
     "<div class='text-muted'>{{description}}</div>" +
     "<p class='text-danger'>$ {{price}}</p>" +
-    "<button onclick='addToCart(id)' class='btn btn-default' id='{{id}}'>Add to Cart »</button>";
+    "<button onclick='{addToCart(id)}' class='btn btn-default' id='{{id}}'>Add to Cart »</button>";
 
 function displayProducts() {
     var pageNumber = getCookie('productListPageNumber');
@@ -66,34 +66,69 @@ function getCatalogProductTypeFilter() {
 
 // pagination
 
-function switchProductListPage(pageNumber){
+function switchProductListPage(pageNumber) {
     setCookie('productListPageNumber', pageNumber);
     displayProducts();
 }
 
 function displayPagination(res) {
-    var currentPage = res.page.number;
     var numberOfPages = res.page.totalPages;
+    var pageLinks = res._links;
+
+    var currentPage = res.page.number;
+    var pageFirst = currentPage < 1 ? undefined : pageLinks.first.href.split("page=")[1].split("&")[0];
+    var pagePrev = currentPage < 2 ? undefined : pageLinks.prev.href.split("page=")[1].split("&")[0];
+    var pageNext = currentPage > numberOfPages - 3 ? undefined : pageLinks.next.href.split("page=")[1].split("&")[0];
+    var pageLast = currentPage > numberOfPages - 2 ? undefined : pageLinks.last.href.split("page=")[1].split("&")[0];
+
+    var pages = [];
+    var p = 0;
+    if (pageFirst != undefined)
+        pages[p++] = {text: "First", id: parseInt(pageFirst), class: ""};
+    else
+        pages[p++] = {text: "First", id: 0, class: "disabled"};
+
+    if (pagePrev != undefined)
+        pages[p++] = {text: "Prev", id: parseInt(pagePrev), class: ""};
+    else
+        pages[p++] = {text: "Prev", id: 0, class: "disabled"};
+
+    pages[p++] = {text: "Page " + (currentPage + 1) + "/" + numberOfPages, id: currentPage, class: "active"};
+
+    if (pageNext != undefined)
+        pages[p++] = {text: "Next", id: parseInt(pageNext), class: ""};
+    else
+        pages[p++] = {text: "Next", id: 0, class: "disabled"};
+
+    if (pageLast != undefined)
+        pages[p++] = {text: "Last", id: parseInt(pageLast), class: ""};
+    else
+        pages[p++] = {text: "Last", id: 0, class: "disabled"};
+
+
+    console.log(pages);
+
+
     var div = document.createElement('div');
-    div.style="text-align: right";
+    div.style = "text-align: center;";
 
     // UL
     var ul = document.createElement('ul');
     ul.className = 'pagination';
     div.appendChild(ul);
-
     // LI
     var li, a;
-    for (var i = 0; i < numberOfPages; i++) {
+    for (var i = 0; i < pages.length; i++) {
 
         li = document.createElement('li');
         a = document.createElement('a');
-        a.innerHTML = i + 1;
-        a.id = i;
+        a.innerHTML = pages[i].text;
+        a.id = pages[i].id;
         a.href = "#";
-        a.setAttribute('onclick', 'switchProductListPage(id)');
+        if (!(pages[i].id == currentPage || pages[i].class == "disabled"))
+            a.setAttribute('onclick', '{switchProductListPage(id)}');
         li.appendChild(a);
-        if (i == currentPage) li.className = 'active';
+        li.className = pages[i].class;
         ul.appendChild(li);
     }
 
